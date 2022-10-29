@@ -1,0 +1,38 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main-board {
+    height: 80vw;
+    width: 80vw;
+    /* background-color: red; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    /* background-image: url('./resources/image1.jpeg'); */
+    background-size: 80vw;
+}
+
+.cell {
+    height: 20vw;
+    width: 20vw;
+    border-radius: 4px; 
+    background-size: 80vw;
+    background-image: url('./resources/image1.jpeg');
+    cursor: pointer;
+}
+
+.cell32 {
+    grid-column-start: 4;
+    grid-column-end: 5;
+    grid-row-start: 4;
+    grid-row-end: 5;
+    transition: 15s;
+    /* display: none; */
+    /* transform: translate(-110%); */
+}
