@@ -1,5 +1,6 @@
-grid = []
-space = [3, 3]
+let grid = []
+let space = [3, 3]
+let lastMoved = undefined;
 
 for (let i = 0; i < 4; i++) {
     row = [];
@@ -45,6 +46,7 @@ function move(cell) {
         grid[row][col] = 0;
         space = [row, col]
         grid[result[0]][result[1]] = 1;
+        lastMoved = [result[0], result[1]];
         cell.style.transform = `translate(${result[1] * 99}%, ${result[0] * 99}%)`;
         cell.setAttribute('row', result[0]);
         cell.setAttribute('col', result[1]);
@@ -105,24 +107,41 @@ function shuffle() {
     console.log(`allDirections ${allDirection}`);
     console.log(`possibleMovesIdx ${possibleMovesIdx}`);
     
-    let randomIdx = Math.floor(Math.random() * possibleMovesIdx.length);
-    let moveIdx = possibleMovesIdx[randomIdx];
-    console.log(`randomIdx ${randomIdx}`);
-    console.log(`moveIdx ${moveIdx}`);
-    row = allDirection[moveIdx][0];
-    col = allDirection[moveIdx][1];
+    do {
+        let randomIdx = Math.floor(Math.random() * possibleMovesIdx.length);
+        let moveIdx = possibleMovesIdx[randomIdx];
+        console.log(`randomIdx ${randomIdx}`);
+        console.log(`moveIdx ${moveIdx}`);
+        row = allDirection[moveIdx][0];
+        col = allDirection[moveIdx][1];
+    } while(pickRandomMove(row, col))
 
     let cell = document.querySelector(`[row='${row}'][col='${col}']`)
-    // let cell = document.getElementsByClassName(`cell${row}${col}`)[0];
     move(cell);
     console.log(space);
 }
 
 
-// for (let i = 0; i < 1000; i++) {
-//     shuffle();
-// }
+function pickRandomMove(row, col) {
+    console.log('lsatMoved', lastMoved);
+    console.log('rowcol', row, col);
+    if (lastMoved && (row !== lastMoved[0] && col !== lastMoved[1])) {
+        console.log('came one');
+        return false;
+    } else if (!lastMoved) {
+        console.log('came tow');
+        return false;
+    }
+    console.log('came end');
+    return true;   
+}
 
-setInterval(() => {
+
+
+let autoShuffle = setInterval(() => {
     shuffle();
-}, 100);
+}, 75);
+
+setTimeout(() => {
+    clearInterval(autoShuffle);
+}, 2000);
