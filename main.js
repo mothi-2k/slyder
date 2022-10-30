@@ -1,4 +1,5 @@
 grid = []
+space = [3, 3]
 
 for (let i = 0; i < 4; i++) {
     row = [];
@@ -42,11 +43,13 @@ function move(cell) {
     }
     if (result !== -1) {
         grid[row][col] = 0;
+        space = [row, col]
         grid[result[0]][result[1]] = 1;
         cell.style.transform = `translate(${result[1] * 99}%, ${result[0] * 99}%)`;
         cell.setAttribute('row', result[0]);
         cell.setAttribute('col', result[1]);
     }
+    console.log(space);
     isSolved();
     return result;
 }
@@ -74,4 +77,52 @@ function checkCellPos(piece) {
         return true;
     }
 }
-isSolved();
+
+
+function shuffle() {
+    let row = space[0];
+    let col = space[1];
+    console.log(`row ${row} col ${col}`);
+    let allDirection = [];
+    let possibleMovesIdx = [];
+    if (row - 1 >= 0) {
+        allDirection[0] = [row -1 , col];
+        possibleMovesIdx.push(0);
+    } 
+    if (col + 1 < 4) {
+        allDirection[1] = [row, col + 1];
+        possibleMovesIdx.push(1);
+    }
+    if (row + 1 < 4) {
+        allDirection[2] = [row + 1, col];
+        possibleMovesIdx.push(2);
+    }
+    if(col - 1 >= 0) {
+        allDirection[3] = [row, col - 1];
+        possibleMovesIdx.push(3);
+    }
+    // console.log(allDirection);
+    console.log(`allDirections ${allDirection}`);
+    console.log(`possibleMovesIdx ${possibleMovesIdx}`);
+    
+    let randomIdx = Math.floor(Math.random() * possibleMovesIdx.length);
+    let moveIdx = possibleMovesIdx[randomIdx];
+    console.log(`randomIdx ${randomIdx}`);
+    console.log(`moveIdx ${moveIdx}`);
+    row = allDirection[moveIdx][0];
+    col = allDirection[moveIdx][1];
+
+    let cell = document.querySelector(`[row='${row}'][col='${col}']`)
+    // let cell = document.getElementsByClassName(`cell${row}${col}`)[0];
+    move(cell);
+    console.log(space);
+}
+
+
+// for (let i = 0; i < 1000; i++) {
+//     shuffle();
+// }
+
+setInterval(() => {
+    shuffle();
+}, 100);
