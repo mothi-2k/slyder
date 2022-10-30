@@ -12,27 +12,31 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    display: grid;
-    grid-template-columns: auto auto auto auto;
+    /* display: grid; */
+    /* grid-template-columns: auto auto auto auto; */
     /* background-image: url('./resources/image1.jpeg'); */
-    background-size: 80vw;
+    /* background-size: 80vw; */
 }
 
 .cell {
     height: 20vw;
     width: 20vw;
-    border-radius: 4px; 
+    border-radius: 5px; 
     background-size: 80vw;
     background-image: url('./resources/image1.jpeg');
     cursor: pointer;
+    transition: all .3s ease-in-out;
+    position: absolute;
 }
 
-.cell32 {
+
+
+/* .cell32 {
     grid-column-start: 4;
     grid-column-end: 5;
     grid-row-start: 4;
     grid-row-end: 5;
     transition: 15s;
-    /* display: none; */
-    /* transform: translate(-110%); */
-}
+    display: none;
+    transform: translate(-110%);
+} */
