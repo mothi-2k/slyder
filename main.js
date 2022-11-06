@@ -9,6 +9,8 @@ let startLock = 0;
 let moveLock = 1;
 let shuffling = 0;
 
+// to adapt the board with window resize
+
 addEventListener('resize', (event) => {
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
@@ -37,6 +39,8 @@ addEventListener('resize', (event) => {
 });
 
 initialize();
+
+// initialize the game board with pieces
 
 function initialize() {
     for (let i = 0; i < 4; i++) {
@@ -74,6 +78,8 @@ function initialize() {
         timerSection.appendChild(buttonSectionShell);
     }
 }
+
+// to move a cell in board
 
 function moveCell(row, col) {
     let cell = document.querySelector(`[row='${row}'][col='${col}']`)
@@ -114,6 +120,8 @@ function move(cell) {
     }
 }
 
+// to check if the current board state is solved
+
 function isSolved() {
     let solved = true;
     let mainBoard = document.getElementsByClassName('main-board')[0];
@@ -131,6 +139,8 @@ function isSolved() {
     
 }
 
+// to check cell is in right position
+
 function checkCellPos(piece) {
     let currentRow = parseInt(piece.getAttribute('row'));
     let currentCol = parseInt(piece.getAttribute('col'));
@@ -141,6 +151,8 @@ function checkCellPos(piece) {
         return true;
     }
 }
+
+// shuffle logic
 
 function shuffle() {
     let row = space[0];
@@ -180,6 +192,8 @@ function shuffle() {
     move(cell);
 }
 
+// to pick a random move - used for shuffling
+
 function pickRandomMove(row, col) {
     console.log('lsatMoved', lastMoved);
     console.log('rowcol', row, col);
@@ -194,6 +208,8 @@ function pickRandomMove(row, col) {
     return true;   
 }
 
+// to shuffle board
+
 function doShuffle() {
     let autoShuffle = setInterval(() => {
         shuffle();
@@ -204,10 +220,14 @@ function doShuffle() {
     }, 2000);
 }
 
+// toggle preview board
+
 function preview() {
     mainBoard = document.getElementsByClassName('preview-board-hidden')[0];
     mainBoard.classList.toggle('preview-board-visible');
 }
+
+// start the game
 
 function startGame() {
     if (startLock) {
@@ -218,11 +238,11 @@ function startGame() {
     moveLock = 1;
     let startButton = document.getElementsByClassName('start-button')[0];
     if (startButton.innerHTML === 'Pause') {
-        startButton.innerHTML = 'Continue';
+        startButton.innerHTML = 'Resume';
         pauseTimer();
         startLock = 0;
         return;
-    } else if (startButton.innerHTML === 'Continue') {
+    } else if (startButton.innerHTML === 'Resume') {
         startButton.innerHTML = 'Pause';
         continueTimer();
         startLock = 0;
@@ -247,6 +267,8 @@ function startGame() {
     
 }
 
+// update the timer each second
+
 function updateTimer() {
     totalTime += 1;
     let secondDisplay = document.getElementsByClassName('second-display')[0];
@@ -257,6 +279,8 @@ function updateTimer() {
     minuteDisplay.innerHTML = `${Math.floor(minute)} Minutes`;
 }
 
+// show result board
+
 function showResult() {
     let resultBoard = document.getElementsByClassName('preview-result-hidden')[0];
     let mainBoard = document.getElementsByClassName('main-board')[0];
@@ -264,12 +288,16 @@ function showResult() {
     resultBoard.classList.toggle('preview-result-visible');
 }
 
+// hide result
+
 function hideResult() {
     let resultBoard = document.getElementsByClassName('preview-result-hidden')[0];
     let mainBoard = document.getElementsByClassName('main-board')[0];
     mainBoard.style.visibility = 'visible';
     resultBoard.classList.toggle('preview-result-visible');
 }
+
+// stop the timer
 
 function stopTimer() {
     let hand = document.getElementsByClassName('hand')[0];
@@ -289,6 +317,8 @@ function stopTimer() {
 
     toggleSuccess();
 }
+
+// success border class - toggle
 
 function toggleSuccess() {
     let startButton = document.getElementsByClassName('start-button')[0];
@@ -314,12 +344,16 @@ function toggleSuccess() {
     updateTimer();
 }
 
+// pause the timer
+
 function pauseTimer() {
     moveLock = 1;
     let hand = document.getElementsByClassName('hand')[0];
     hand.classList.toggle('hand-animation');
     clearInterval(timer);
 }
+
+// resume timer
 
 function continueTimer() {
     moveLock = 0;
