@@ -220,10 +220,6 @@ body {
     border: solid rgb(43, 95, 53) 1px;
 }
 
-.success-border-top {
-    border-top: solid rgb(43, 95, 53) 1px;
-}
-
 .main-footer {
     margin-top: 2vh;
     display: flex;
@@ -232,6 +228,10 @@ body {
     justify-content: space-around;
     border-top: solid rgb(95, 43, 43) 1px;
     margin-top: 10vh;
+}
+
+.success-border-top {
+    border-top: solid rgb(43, 95, 53) 1px;
 }
 
 .github-link {

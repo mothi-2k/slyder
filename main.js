@@ -86,7 +86,6 @@ function moveCell(row, col) {
     if (!moveLock) {
         move(cell);
     }
-    console.log(cell);
 }
 
 function move(cell) {
