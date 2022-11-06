@@ -84,7 +84,7 @@ body {
     height: 100%;
     width: 100%;
     border-radius: 5px; 
-    background: url('./resources/image1.jpeg');
+    background: url('./resources/shrek.jpeg');
     background-size: 80vw;
     clip-path: circle(0% at 100% 100%);
     transition: all .4s ease-in-out;
@@ -130,7 +130,7 @@ body {
     width: 20vw;
     border-radius: 5px; 
     background-size: 80vw;
-    background-image: url('./resources/image1.jpeg');
+    background-image: url('./resources/shrek.jpeg');
     cursor: pointer;
     transition: all .3s ease-in-out;
     position: absolute;
