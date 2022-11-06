@@ -7,7 +7,7 @@
     box-sizing: border-box;
 }
 
-
+/* default css styles */
 
 body {
     top: 0;
@@ -57,22 +57,6 @@ body {
 
 .logo:hover{
     cursor: pointer;
-}
-
-.logo > .logo-svg > .blue {
-    animation: infinite logo-animate-blue 1s ease-in-out; 
-}
-
-.logo > .logo-svg > .yellow {
-    animation: infinite logo-animate-yellow 1s ease-in-out; 
-}
-
-.logo > .logo-svg > g > .red {
-    animation: infinite logo-animate-red 1s ease-in-out; 
-}
-
-.logo > .logo-svg > .green {
-    animation: infinite logo-animate-green 1s ease-in-out; 
 }
 
 .main-container {
@@ -236,6 +220,10 @@ body {
     border: solid rgb(43, 95, 53) 1px;
 }
 
+.success-border-top {
+    border-top: solid rgb(43, 95, 53) 1px;
+}
+
 .main-footer {
     margin-top: 2vh;
     display: flex;
@@ -246,10 +234,13 @@ body {
     margin-top: 10vh;
 }
 
-.github-logo {
-    cursor: pointer;
-    height: auto;
+.github-link {
+    height: inherit;
     padding: 1em;
+}
+
+.github-logo {
+    height: auto;
 }
 
 .github-logo-svg {
@@ -469,15 +460,9 @@ body {
     .success-border {
         border: solid rgb(43, 95, 53) 1px;
     }
-    
-    .main-footer {
-        border-top: solid rgb(95, 43, 43) 1px;
-        margin-top: 10vh;
-    }
 
-    .github-logo {
-        height: 10px;
-        padding: 1em;
+    .success-border-top {
+        border-top: solid rgb(43, 95, 53) 1px;
     }
     
     .github-logo-svg {
@@ -508,5 +493,25 @@ body {
     .preview-button:hover {
         background-color: rgb(95, 43, 43);
         color: rgb(236, 233, 233);
+    }
+}
+
+/* css changes for portrait */
+
+@media all and (orientation: portrait) {
+    .logo > .logo-svg > .blue {
+        animation: infinite logo-animate-blue 1s ease-in-out; 
+    }
+    
+    .logo > .logo-svg > .yellow {
+        animation: infinite logo-animate-yellow 1s ease-in-out; 
+    }
+    
+    .logo > .logo-svg > g > .red {
+        animation: infinite logo-animate-red 1s ease-in-out; 
+    }
+    
+    .logo > .logo-svg > .green {
+        animation: infinite logo-animate-green 1s ease-in-out; 
     }
 }
