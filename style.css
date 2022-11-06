@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Quattrocento+Sans&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');* {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -14,7 +16,6 @@ body {
     height: 100vh;
     width: 100vw;
     font-family: 'Quattrocento Sans', sans-serif;
-    /* background: linear-gradient(90deg, rgba(32,32,32,1) 0%, rgba(80,79,85,1) 100%); */
     background: #232323f1;
 }
 
@@ -41,15 +42,12 @@ body {
 .logo-text {
     font-size: 1.5em;
     font-family: inherit;
-
     background-image: linear-gradient(90deg,#97C2F7, #F0C419, #FB7B76, #94C783);
     background-clip: text;
     -webkit-text-stroke-color: transparent;
     -webkit-text-stroke-width: 3px;
-    /* letter-spacing: 3px; */
     -webkit-background-clip: text;
     color: #232323f1;
-    /* color: #a7a7a7f1; */
 }
 
 .logo-svg {
@@ -88,40 +86,12 @@ body {
     margin-top: 8vh;
     height: 80vw;
     width: 80vw;
-    /* margin: 5vh auto 0 auto; */
     position: relative;
-    /* display: grid;
-    
-    grid-template-rows: auto;
-    grid-template-columns: auto; */
-}
-
-.board {
-
-    /* height: 80vw;
-    width: 80vw; */
-    /* margin: 5vh auto 0 auto; */
-    /* display: block; */
-    /* background-color: red; */
-    /* position: absolute; */
-    /* top: 50%;
-    left: 50%; */
-    /* transform: translate(-50%, -50%); */
 }
 
 .main-board {
     height: 100%;
     width: 100%;
-    /* margin-top: 2vh; */
-    /* height: 80vw;
-    width: 80vw; */
-    /* background-color: red; */
-    /* position: absolute; */
-    /* top: 50%; */
-    /* left: 50%; */
-    /* transform: translate(-50%, -50%); */
-
-    /* grid-area: 1 / 2; */
 }
 
 .preview-board-hidden {
@@ -139,7 +109,6 @@ body {
 .preview-board-visible {
     clip-path: circle(100%);
 }
-
 
 .preview-result-hidden {
     position: absolute;
@@ -182,7 +151,6 @@ body {
     transition: all .3s ease-in-out;
     position: absolute;
     animation: cell-grow 1s ease-in-out; 
-
 }
 
 .cell-grow {
@@ -198,9 +166,6 @@ body {
 }
 
 .board-button {
-    /* position: absolute; */
-    /* top: 80%; */
-    /* transform: translate(-50%, -50%); */
     background: none;
     border: none;
     font-family: inherit;
@@ -211,17 +176,6 @@ body {
     cursor: pointer;
 }
 
-.start-button {
-    /* left: 30%; */
-    /* margin: 0 auto; */
-    /* transform: translate(-50%, -50%); */
-}
-
-.start-button:hover {
-    background-color: rgb(95, 43, 43);
-    color: rgb(236, 233, 233);
-}
-
 .start-button:active {
     background-color: rgb(95, 43, 43);
     color: rgb(236, 233, 233);
@@ -229,12 +183,6 @@ body {
 
 .preview-button {
     right: 30%;
-    /* transform: translate(+50%, -50%); */
-}
-
-.preview-button:hover {
-    background-color: rgb(95, 43, 43);
-    color: rgb(236, 233, 233);
 }
 
 .preview-button:active {
@@ -242,16 +190,12 @@ body {
     color: rgb(236, 233, 233);
 }
 
+
+
 .timer {
     margin-top: 8vh;
-    /* position: absolute; */
-    /* top: 20%; */
-    /* left: 50%; */
-    /* margin: 10vh auto 0 auto; */
-    /* height: 40px; */
     padding: 5px;
     width: 80vw;
-    /* transform: translate(-50%, -50%); */
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -267,9 +211,6 @@ body {
     height: 5vw;
     width: 5vw;
     border-radius: 50%;
-    /* top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); */
     background: #383838;
     border: solid rgb(95, 43, 43) 1px;
 }
@@ -313,8 +254,9 @@ body {
 
 .github-logo-svg {
     height: 2em;
-    /* padding: 10px; */
 }
+
+/* animations */
 
 @keyframes hand-rotate {
     from {
@@ -438,6 +380,7 @@ body {
     }  
 }
 
+/* css changes for landscape */
 
 @media all and (orientation: landscape) {
     body {
@@ -480,11 +423,8 @@ body {
     }
 
     .timer {
-        /* margin: 10vh auto 0 auto; */
-        /* height: 10vh; */
         padding: 5px;
         width: 60vh;
-        /* height: 60vh; */
         display: flex;
         flex-direction: row;
         justify-content: space-evenly;
@@ -500,9 +440,6 @@ body {
         height: 5vh;
         width: 5vh;
         border-radius: 50%;
-        /* top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%); */
         background: #383838;
         border: solid rgb(95, 43, 43) 1px;
     }
@@ -524,7 +461,6 @@ body {
         position: relative;
         margin-top: 5vh;
         display: flex;
-        /* width: 0%; */
         width: auto;
         order: 3;
         justify-content: space-evenly;
@@ -546,7 +482,6 @@ body {
     
     .github-logo-svg {
         height: 2.5em;
-        /* padding: 10px; */
     }
 
     .logo:hover > .logo-svg > .blue {
@@ -565,4 +500,13 @@ body {
         animation: infinite logo-animate-green 1s ease-in-out; 
     }
 
+    .start-button:hover {
+        background-color: rgb(95, 43, 43);
+        color: rgb(236, 233, 233);
+    }
+
+    .preview-button:hover {
+        background-color: rgb(95, 43, 43);
+        color: rgb(236, 233, 233);
+    }
 }
