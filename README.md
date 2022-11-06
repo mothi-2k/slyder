@@ -5,3 +5,4 @@
 ## Features
 
 - Responsive design
+- Trivia performace card on solving
