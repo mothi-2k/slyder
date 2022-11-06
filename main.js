@@ -1,30 +1,83 @@
 let grid = []
 let space = [3, 3]
 let lastMoved = undefined;
+let startTime;
+let timer;
+let moveNumber = 0;
+let totalTime = 0;
+let startLock = 0;
 
-for (let i = 0; i < 4; i++) {
-    row = [];
-    for (let j = 0; j < 4; j++) {
-        if (i === 3 && j == 3) {
-            row[j] = 0
-            continue
+addEventListener('resize', (event) => {
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            if (i === 3 && j == 3) {
+                continue
+            }
+            let cell = document.getElementsByClassName(`cell${i}${j}`)[0];
+            if (screen.width > screen.height) {
+                cell.style.backgroundPosition = `-${(j)*15}vh -${(i)*15}vh`
+            } else {
+                cell.style.backgroundPosition = `-${(j)*20}vw -${(i)*20}vw`
+            }
         }
-        row[j] = 1;
-        let cell = document.createElement('div')
-        cell.setAttribute('row', i);
-        cell.setAttribute('col', j);
-        cell.addEventListener("click", (event) => move(cell));
-        cell.style.transform = `translate(${j * 99}%, ${i * 99}%)`;
-        cell.style.backgroundPosition = `-${(j)*20}vw -${(i)*20}vw`
-        cell.classList = `cell cell${i}${j}`
-        mainBoard = document.getElementsByClassName('main-board')[0]
-        mainBoard.appendChild(cell);
+    } 
+    let mainContainer = document.getElementsByClassName('main-container')[0];
+    let timerSection = document.getElementsByClassName('timer-shell')[0];
+    let buttonSection = document.getElementsByClassName('button-section')[0];
+    let buttonSectionShell = document.createElement('div');
+    if (screen.width > screen.height) {
+        buttonSectionShell.appendChild(buttonSection);
+        timerSection.appendChild(buttonSectionShell);
+    } else {
+        mainContainer.appendChild(buttonSection);
+        buttonSectionShell.remove();
     }
-    grid[i] = row;
-} 
+});
+
+initialize();
+
+function initialize() {
+
+    for (let i = 0; i < 4; i++) {
+        row = [];
+        for (let j = 0; j < 4; j++) {
+            if (i === 3 && j == 3) {
+                row[j] = 0
+                continue
+            }
+            row[j] = 1;
+            let cell = document.createElement('div')
+            cell.setAttribute('row', i);
+            cell.setAttribute('col', j);
+            cell.addEventListener("click", (event) => move(cell));
+            
+            cell.style.transform = `translate(${j * 100}%, ${i * 100}%) scale(1)`;
+            console.log(screen.width, screen.height);
+            if (screen.width > screen.height) {
+                cell.style.backgroundPosition = `-${(j)*15}vh -${(i)*15}vh`
+            } else {
+                cell.style.backgroundPosition = `-${(j)*20}vw -${(i)*20}vw`
+            }
+            mainBoard = document.getElementsByClassName('main-board')[0]
+            cell.classList = `cell cell${i}${j}`
+            mainBoard.appendChild(cell);
+            // console.log(cell.style.backgroundPosition);
+        }
+        grid[i] = row;
+    } 
+    
+    if (screen.width > screen.height) {
+        let timerSection = document.getElementsByClassName('timer-shell')[0];
+        let buttonSection = document.getElementsByClassName('button-section')[0];
+        let buttonSectionShell = document.createElement('div');
+        buttonSectionShell.appendChild(buttonSection);
+        timerSection.appendChild(buttonSectionShell);
+    }
+}
 
 
 function move(cell) {
+    moveNumber += 1;
     row = parseInt(cell.getAttribute('row'));
     col = parseInt(cell.getAttribute('col'));
     // console.log(row, col);
@@ -47,12 +100,12 @@ function move(cell) {
         space = [row, col]
         grid[result[0]][result[1]] = 1;
         lastMoved = [result[0], result[1]];
-        cell.style.transform = `translate(${result[1] * 99}%, ${result[0] * 99}%)`;
+        cell.style.transform = `translate(${result[1] * 100}%, ${result[0] * 100}%)`;
         cell.setAttribute('row', result[0]);
         cell.setAttribute('col', result[1]);
+        console.log(space);
+        isSolved();
     }
-    console.log(space);
-    isSolved();
     return result;
 }
 
@@ -64,6 +117,10 @@ function isSolved() {
         solved = solved && checkCellPos(piece);
     }
     if (solved) {
+        console.log(moveNumber);
+        showResult();
+        clearInterval(timer);
+        stopTimer();
         console.log('yes solved');
     }
     
@@ -137,11 +194,131 @@ function pickRandomMove(row, col) {
 }
 
 
+function doShuffle() {
+    let autoShuffle = setInterval(() => {
+        shuffle();
+    }, 500);
 
-let autoShuffle = setInterval(() => {
-    shuffle();
-}, 75);
+    setTimeout(() => {
+        clearInterval(autoShuffle);
+    }, 2000);
+}
 
-setTimeout(() => {
-    clearInterval(autoShuffle);
-}, 2000);
+function preview() {
+    mainBoard = document.getElementsByClassName('preview-board-hidden')[0];
+    console.log(mainBoard);
+    console.log(mainBoard.classList.toggle('preview-board-visible'));
+}
+
+function startGame() {
+    if (startLock) {
+        return;
+    }
+    startLock = 1;
+    let startButton = document.getElementsByClassName('start-button')[0];
+    if (startButton.innerHTML === 'Pause') {
+        startButton.innerHTML = 'Continue';
+        pauseTimer();
+        startLock = 0;
+        return;
+    } else if (startButton.innerHTML === 'Continue') {
+        startButton.innerHTML = 'Pause';
+        continueTimer();
+        startLock = 0;
+        return;
+    } else if (startButton.innerHTML === 'Play again') {
+        toggleSuccess();
+        hideResult();
+    }
+    doShuffle();
+    setTimeout(() => {
+        moveNumber = 0;
+        startTime = Date.now();
+        timer = setInterval(() => {
+            updateTimer();
+        }, 1000);
+        let hand = document.getElementsByClassName('hand')[0];
+        hand.classList.toggle('hand-animation');
+        startButton.innerHTML = 'Pause';
+        startLock = 0;
+    }, 2100);
+    
+}
+
+function updateTimer() {
+    totalTime += 1;
+    // let milliSeconds = Date.now() - startTime - totalPauseTime;
+    let secondDisplay = document.getElementsByClassName('second-display')[0];
+    let minuteDisplay = document.getElementsByClassName('minute-display')[0];
+    // let second = (milliSeconds / 1000) % 60;
+    let second = totalTime % 60;
+    // let minute = milliSeconds / 1000 / 60;
+    let minute = totalTime / 60;
+    secondDisplay.innerHTML = `${Math.floor(second)} Seconds`;
+    minuteDisplay.innerHTML = `${Math.floor(minute)} Minutes`;
+}
+
+function showResult() {
+    let resultBoard = document.getElementsByClassName('preview-result-hidden')[0];
+    let mainBoard = document.getElementsByClassName('main-board')[0];
+    mainBoard.style.visibility = 'hidden';
+    console.log(resultBoard.classList.toggle('preview-result-visible'));
+    console.log(resultBoard);
+}
+
+function hideResult() {
+    let resultBoard = document.getElementsByClassName('preview-result-hidden')[0];
+    let mainBoard = document.getElementsByClassName('main-board')[0];
+    mainBoard.style.visibility = 'visible';
+    console.log(resultBoard.classList.toggle('preview-result-visible'));
+    console.log(resultBoard);
+}
+
+function stopTimer() {
+    let hand = document.getElementsByClassName('hand')[0];
+    hand.classList.toggle('hand-animation');
+
+    let secondDisplay = document.getElementsByClassName('second-display')[0];
+    let minuteDisplay = document.getElementsByClassName('minute-display')[0];
+    let second = secondDisplay.innerHTML.split(' ')[0];
+    console.log(second);
+    let minute = minuteDisplay.innerHTML.split(' ')[0];
+
+    let timeTakenDisplay = document.getElementsByClassName('result-time-taken')[0];
+    let movesUsedDisplay = document.getElementsByClassName('result-moves-used')[0];
+
+    timeTakenDisplay.innerHTML = `${minute} Minutes ${second} Seconds`
+    movesUsedDisplay.innerHTML = `${moveNumber}`;
+
+    toggleSuccess();
+}
+
+function toggleSuccess() {
+    let startButton = document.getElementsByClassName('start-button')[0];
+    startButton.innerHTML = 'Play again';
+    let previewButton = document.getElementsByClassName('preview-button')[0];
+    let timer = document.getElementsByClassName('timer')[0];
+    let clock = document.getElementsByClassName('clock')[0];
+    let successClass = 'success-border';
+    startButton.classList.toggle(successClass);
+    previewButton.classList.toggle(successClass);
+    timer.classList.toggle(successClass);
+    clock.classList.toggle(successClass);
+
+    let previewDisplay = document.getElementsByClassName('preview-board-hidden')[0];
+    previewDisplay.classList.toggle('preview-board-visible');
+}
+
+function pauseTimer() {
+    let hand = document.getElementsByClassName('hand')[0];
+    hand.classList.toggle('hand-animation');
+    clearInterval(timer);
+}
+
+function continueTimer() {
+    let hand = document.getElementsByClassName('hand')[0];
+    hand.classList.toggle('hand-animation');
+    timer = setInterval(() => {
+        updateTimer();
+    }, 1000);
+}
