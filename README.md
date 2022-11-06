@@ -1,8 +1,8 @@
 # Slyder
 
-### An interactive and boring sliding game made with JavaScript
+### An interactive and boring sliding-puzzle game made with JavaScript
 
 ## Features
 
 - Responsive design
-- Trivia performace card on solving
+- Trivia performace card on solving puzzle
